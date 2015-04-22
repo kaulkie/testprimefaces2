@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<ui:remove>estilo adicionado para diminuir tamanho dos widgets</ui:remove>
+	<style>
+		.ui-widget, .ui-widget .ui-widget {
+			font-size: 90% !important;
+		}
+	</style>
+</h:head>
+<body> 
+<h:form>
+    <h:panelGrid columns="4" cellpadding="5">
+        <h:outputLabel for="name" value="Name:" style="font-weight:bold" />
+        <p:inputText id="name" value="#{basicView01.text}" />
+        <p:commandButton value="Submit" update="display" icon="ui-icon-check" />
+        <h:outputText id="display" value="#{basicView01.text}" />
+    </h:panelGrid>
+    
+    <h:panelGrid columns="3" cellpadding="5">
+        <h:outputText value="KeyUp: " />
+        <p:inputText id="firstname" value="#{basicView01.firstname}">
+            <p:ajax event="keyup" update="out1" />
+        </p:inputText>
+        <h:outputText id="out1" value="#{basicView01.firstname}" />
+ 
+        <h:outputText value="Blur: " />
+        <p:inputText id="surname" value="#{basicView01.lastname}">
+            <p:ajax event="blur" update="out2" />
+        </p:inputText>
+        <h:outputText id="out2" value="#{basicView01.lastname}" />
+    </h:panelGrid>
+    
+    <h:panelGrid columns="3">
+        <h:outputText value="Keyup: " />
+        <p:inputText id="counter" value="#{basicView01.text2}">
+            <p:ajax event="keyup" update="out" listener="#{basicView01.handleKeyEvent}" />
+        </p:inputText>
+        <h:outputText id="out" value="#{basicView01.text2}" />
+    </h:panelGrid>
+    
+    <h:panelGrid columns="2" cellpadding="5">
+        <h:outputText value="Counter: " />
+        <h:outputText id="output" value="#{basicView01.number}" />
+    </h:panelGrid>
+    <p:commandButton value="Count" actionListener="#{basicView01.increment}" update="output" />
+    
+    <ui:remove>partial process</ui:remove>
+    <h:panelGrid id="grid" cellpadding="5" columns="2" style="margin-bottom:10px">
+        <f:facet name="header">
+            <p:messages id="msgs" />
+        </f:facet>
+ 
+        <p:outputLabel for="firstname2" value="Firstname:" />
+        <p:inputText id="firstname2" value="#{basicView01.firstname}" />
+ 
+        <p:outputLabel for="surname2" value="Surname:" />
+        <p:inputText id="surname2" value="#{basicView01.lastname}" required="true" requiredMessage="Surname is required." />
+    </h:panelGrid>
+ 
+    <h:panelGrid columns="6" cellpadding="5">
+        <p:commandButton value="All" id="btnAll" process="@all" update="grid" actionListener="#{basicView01.save}" />
+        <p:commandButton value="Form" id="btnForm" process="@form" update="grid" actionListener="#{basicView01.save}" />
+        <p:commandButton value="This" id="btnThis" process="@this" update="grid" actionListener="#{basicView01.save}" />
+        <p:commandButton value="None" id="btnNone" process="@none" update="grid" actionListener="#{basicView01.save}" />
+        <p:commandButton value="Parent" id="btnParent" process="@parent" update="grid" actionListener="#{basicView01.save}" />
+        <p:commandButton value="This Surname" id="btnSurname" process="@this,surname2" update="grid" actionListener="#{basicView01.save}" />
+    </h:panelGrid>
+</h:form>
+</body> 
+</html>
